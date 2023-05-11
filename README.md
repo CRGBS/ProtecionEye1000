@@ -29,3 +29,7 @@ START_HOUR = 8      # Start time hour (24-hour format)
 
 END_HOUR = 22       # End time hour (24-hour format)
 
+## 支持我
+
+如果您喜歡本程式，歡迎按個星星關注本專案，讓我知道您的支持！
+
