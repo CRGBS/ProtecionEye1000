@@ -4,7 +4,7 @@ import tkinter as tk
 
 # Define the time intervals
 WORK_TIME = 30 * 60  # 30 minutes in seconds
-REST_TIME = 10 * 60  # 10 minutes in seconds
+REST_TIME = 10 * 60 # 10 minutes in seconds
 START_HOUR = 8      # Start time hour (24-hour format)
 END_HOUR = 22       # End time hour (24-hour format)
 
@@ -55,22 +55,20 @@ def remind_to_rest(is_resting):
             window.after(1000, update_time_label)
         else:
             window.destroy()
-
     # Start the countdown timer
     start_time = time.monotonic()
     update_time_label()
 
     # Start the mainloop to update the GUI
     window.mainloop()
-
+    
 def schedule_reminders():
     current_hour = time.localtime().tm_hour
     if current_hour >= START_HOUR and current_hour < END_HOUR:
-    
-        print(r'timework')
-        scheduler.enter(WORK_TIME, 1, remind_to_rest, (False,))
-        scheduler.enter(WORK_TIME + REST_TIME, 1, remind_to_rest, (True,))
-    scheduler.enter(WORK_TIME + REST_TIME, 1, schedule_reminders)
+        print("Starting work/rest reminder...")
+        scheduler.enter(3, 1, remind_to_rest, (False,))
+        scheduler.enter(3, 1, remind_to_rest, (True,))
+    scheduler.enter(WORK_TIME + REST_TIME+1, 1, schedule_reminders)
 
 # Schedule the first reminder
 schedule_reminders()
