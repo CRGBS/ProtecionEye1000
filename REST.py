@@ -24,21 +24,22 @@ def remind_to_rest(is_resting):
     # Create the GUI window
     window = tk.Tk()
     window.title(title)
-    window.geometry("800x300")
+    window.geometry("900x300")
+    window.configure(bg="black")  # 设置窗口背景色为黑色
 
     # Define the GUI elements
-    label = tk.Label(window, text=message, font=("Arial", 29))
+    label = tk.Label(window, text=message, font=("Arial", 32), bg="black", fg="gray")
     label.pack(pady=20)
 
     # Add a label to show remaining time
-    time_label = tk.Label(window, text=f"Remaining time: {duration // 60:02d}:{duration % 60:02d}", font=("Arial", 20))
+    time_label = tk.Label(window, text=f"Remaining time: {duration // 60:02d}:{duration % 60:02d}", font=("Arial", 23), bg="black", fg="gray")
     time_label.pack()
 
     # Add a button to pause for 1 hour
     def pause_for_1_hour():
         window.destroy()
         scheduler.enter(60 * 60, 1, remind_to_rest, (is_resting,))
-    pause_button = tk.Button(window, text="Pause for 1 hour", command=pause_for_1_hour, font=("Arial", 20))
+    pause_button = tk.Button(window, text="Pause for 1 hour", command=pause_for_1_hour, font=("Arial", 23), bg="black", fg="gray")
     pause_button.pack(pady=20)
 
     # Display the window
@@ -50,7 +51,7 @@ def remind_to_rest(is_resting):
     def update_time_label():
         nonlocal duration, time_label, window
         remaining_time = max(0, duration - int(time.monotonic() - start_time))
-        time_label.config(text=f"Remaining time: {remaining_time // 60:02d}:{remaining_time % 60:02d}", font=("Arial", 20))
+        time_label.config(text=f"Remaining time: {remaining_time // 60:02d}:{remaining_time % 60:02d}", font=("Arial", 23), bg="black", fg="gray")
         if remaining_time > 0:
             window.after(1000, update_time_label)
         else:
@@ -65,7 +66,7 @@ def remind_to_rest(is_resting):
 def schedule_reminders():
     current_hour = time.localtime().tm_hour
     if current_hour >= START_HOUR and current_hour < END_HOUR:
-        print("Starting work/rest reminder...")
+        #print("Starting work/rest reminder...")
         scheduler.enter(3, 1, remind_to_rest, (False,))
         scheduler.enter(3, 1, remind_to_rest, (True,))
     scheduler.enter(WORK_TIME + REST_TIME+1, 1, schedule_reminders)
