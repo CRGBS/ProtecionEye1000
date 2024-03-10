@@ -13,6 +13,7 @@ EXTENSION_TIME = 60 * 60  # 1 hour in seconds
 scheduler = sched.scheduler(time.monotonic, time.sleep)
 
 def remind_to_rest(is_resting):
+    global WORK_TIME, REST_TIME
     if is_resting:
         title = "Rest Reminder"
         message = f"It's time to take a break! Rest for {REST_TIME // 60} minutes."
@@ -25,7 +26,7 @@ def remind_to_rest(is_resting):
     # Create the GUI window
     window = tk.Tk()
     window.title(title)
-    window.geometry("900x300")
+    window.geometry("900x340")
     window.configure(bg="black")  # Set window background color to black
 
     # Define the GUI elements
@@ -46,6 +47,17 @@ def remind_to_rest(is_resting):
                               font=("Arial", 23), bg="black", fg="gray")
     extend_button.pack(pady=20)
 
+    # Add a button to Reset reminders
+    def reset_reminders():
+        for event in scheduler.queue:
+            scheduler.cancel(event)
+        window.destroy()
+        schedule_reminders()
+        scheduler.run()
+    reset_button = tk.Button(window, text="Reset Reminders", command=reset_reminders,
+                        font=("Arial", 20), bg="black", fg="gray")
+    reset_button.pack(pady=20)
+    
     # Display the window
     window.attributes("-topmost", True)
     window.grab_set()
@@ -60,6 +72,8 @@ def remind_to_rest(is_resting):
             bg="black", fg="gray")
         if remaining_time > 0:
             window.after(1000, update_time_label)
+            # Check if the window is still valid
+            #TODO if window.winfo_exists():
         else:
             window.destroy()
 
