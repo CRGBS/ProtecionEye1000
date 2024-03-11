@@ -26,8 +26,9 @@ def remind_to_rest(is_resting):
     # Create the GUI window
     window = tk.Tk()
     window.title(title)
-    window.geometry("900x340")
+    window.geometry("900x320")
     window.configure(bg="black")  # Set window background color to black
+    window.resizable(width=False, height=False)  #set the window resizable property to False
 
     # Define the GUI elements
     label = tk.Label(window, text=message, font=("Arial", 32), bg="black", fg="gray")
@@ -45,7 +46,7 @@ def remind_to_rest(is_resting):
 
     extend_button = tk.Button(window, text=f"Extend for {EXTENSION_TIME // 60} minutes", command=extend_timer,
                               font=("Arial", 23), bg="black", fg="gray")
-    extend_button.pack(pady=20)
+    extend_button.pack(side=tk.LEFT, padx=80)
 
     # Add a button to Reset reminders
     def reset_reminders():
@@ -55,8 +56,8 @@ def remind_to_rest(is_resting):
         schedule_reminders()
         scheduler.run()
     reset_button = tk.Button(window, text="Reset Reminders", command=reset_reminders,
-                        font=("Arial", 20), bg="black", fg="gray")
-    reset_button.pack(pady=20)
+                        font=("Arial", 23), bg="black", fg="gray")
+    reset_button.pack(side=tk.LEFT, padx=7)
     
     # Display the window
     window.attributes("-topmost", True)
