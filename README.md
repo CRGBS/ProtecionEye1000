@@ -30,9 +30,10 @@ END_HOUR：每天停止的時間，預設為晚上 10 點（24 小時制）。
 
 
 
-## English
 
-# ProtecionEye1000
+
+# ProtecionEye1000 - English
+
 
 ## Function:
 
