@@ -46,7 +46,7 @@ def remind_to_rest(is_resting):
 
     extend_button = tk.Button(window, text=f"Extend for {EXTENSION_TIME // 60} minutes", command=extend_timer,
                               font=("Arial", 23), bg="black", fg="gray")
-    extend_button.pack(side=tk.LEFT, padx=80)
+    extend_button.pack(side=tk.LEFT, padx=30)
 
     # Add a button to Reset reminders
     def reset_reminders():
@@ -57,8 +57,20 @@ def remind_to_rest(is_resting):
         scheduler.run()
     reset_button = tk.Button(window, text="Reset Reminders", command=reset_reminders,
                         font=("Arial", 23), bg="black", fg="gray")
-    reset_button.pack(side=tk.LEFT, padx=7)
+    reset_button.pack(side=tk.LEFT, padx=20)
     
+        # Add a button to Reset reminders
+    def force_rest():
+        for event in scheduler.queue:
+            scheduler.cancel(event)
+        window.destroy()
+        
+        scheduler.enter(3, 1, remind_to_rest, (True,))
+        scheduler.enter(REST_TIME + 1, 1, schedule_reminders)
+        
+    rest_button = tk.Button(window, text="Force rest", command=force_rest,
+                        font=("Arial", 23), bg="black", fg="gray")
+    rest_button.pack(side=tk.LEFT, padx=9)
     # Display the window
     window.attributes("-topmost", True)
     window.grab_set()
